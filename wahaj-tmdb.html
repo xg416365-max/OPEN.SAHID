@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>وهج — شاهد بأسلوب جديد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070B16;--ink:#F5F1E8;--mute:rgba(245,241,232,.62);--gold:#F2B25C;--teal:#5EE0CF;--line:rgba(255,255,255,.16);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);color-scheme:dark}
+*{box-sizing:inherit;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:"Readex Pro","Segoe UI",Tahoma,sans-serif;overflow-x:hidden;padding-bottom:130px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* liquid glass */
+.glass{position:relative;isolation:isolate;background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.05));
+backdrop-filter:blur(22px) saturate(180%) brightness(1.08);-webkit-backdrop-filter:blur(22px) saturate(180%) brightness(1.08);
+border:1px solid var(--line);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,255,255,.1),inset 0 0 18px rgba(255,255,255,.05),0 12px 32px rgba(0,0,0,.4)}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+background:radial-gradient(120% 90% at 15% 0%,rgba(255,255,255,.35),transparent 45%),radial-gradient(80% 60% at 90% 110%,rgba(94,224,207,.18),transparent 60%)}
+
+/* top bar */
+.top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 12px}
+.logo{font-weight:700;font-size:26px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.tools{display:flex;gap:10px;align-items:center}
+.ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.sub{height:44px;padding:0 18px;border-radius:22px;font-weight:600;font-size:14px;background:var(--ink);color:#12100B;border:0;box-shadow:0 6px 20px rgba(242,178,92,.3)}
+
+/* hero */
+.hero{position:relative;height:min(86vh,720px);overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 86px;text-align:center;align-items:center}
+.slide.on{opacity:1}
+.art{position:absolute;inset:0;z-index:-1}
+.art b{position:absolute;border-radius:50%;filter:blur(40px)}
+.art::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 6%,rgba(7,11,22,.55) 40%,transparent 75%)}
+.slide h1{font-size:clamp(46px,15vw,72px);font-weight:700;line-height:1.05;letter-spacing:-1px;margin-bottom:18px;text-shadow:0 6px 40px rgba(0,0,0,.5)}
+.rank{display:inline-flex;align-items:center;gap:8px;font-size:14px;margin-bottom:10px}
+.rank em{font-style:normal;font-weight:700;font-size:12px;padding:3px 8px;border-radius:8px;background:var(--gold);color:#1a1205}
+.meta{color:var(--mute);font-size:14px;margin:4px 0 6px}
+.tag{color:var(--gold);font-size:15px;font-weight:600;margin-bottom:18px}
+.acts{display:flex;gap:12px;width:100%;max-width:420px;align-items:center}
+.play{flex:1;height:56px;border-radius:28px;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:#12100B;box-shadow:0 10px 30px rgba(245,241,232,.2)}
+.play svg{fill:currentColor;stroke:none}
+.dots{position:absolute;bottom:56px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:2}
+.dots span{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.35);transition:.4s}
+.dots span.on{width:30px;background:var(--ink)}
+
+/* chips */
+.chips{display:flex;gap:10px;overflow-x:auto;padding:4px 20px 8px;scrollbar-width:none}
+.chips button{flex:none;padding:10px 20px;border-radius:22px;font-size:14px;font-weight:600}
+.chips button.on{background:var(--ink);color:#12100B;border-color:transparent}
+
+/* rails */
+.rail h2{font-size:19px;font-weight:700;padding:26px 20px 14px;display:flex;align-items:center;gap:6px}
+.rail h2 svg{width:18px;height:18px;color:var(--mute)}
+.row{display:flex;gap:14px;overflow-x:auto;padding:0 20px 6px;scroll-snap-type:x proximity;scrollbar-width:none}
+.row::-webkit-scrollbar,.chips::-webkit-scrollbar{display:none}
+.card{flex:none;scroll-snap-align:start;text-align:right}
+.poster{position:relative;width:148px;aspect-ratio:2/3;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end;padding:14px;font-weight:700;font-size:21px;line-height:1.15;
+box-shadow:0 14px 30px rgba(0,0,0,.45);transition:transform .25s}
+.card:active .poster{transform:scale(.96)}
+.poster::before{content:"";position:absolute;width:130%;aspect-ratio:1;border-radius:50%;top:-30%;right:-40%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 65%)}
+.poster::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),transparent 55%)}
+.poster span{position:relative;z-index:1}
+.topn{position:absolute;top:10px;right:10px;z-index:2;padding:4px 9px;border-radius:10px;font-size:11px;font-weight:700;line-height:1.1;text-align:center}
+.cap{width:148px;font-size:13px;color:var(--mute);padding:10px 4px 0}
+.wide .poster{width:250px;aspect-ratio:16/10;font-size:19px}
+.wide .cap{width:250px;display:flex;justify-content:space-between}
+.bar{position:absolute;left:14px;right:14px;bottom:10px;height:4px;border-radius:2px;background:rgba(255,255,255,.28);z-index:2}
+.bar i{display:block;height:100%;border-radius:2px;background:var(--gold);margin-inline-start:auto}
+.dur{position:absolute;left:12px;bottom:20px;z-index:2;font-size:12px;font-weight:600}
+
+/* nav */
+.nav{position:fixed;z-index:30;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);height:72px;border-radius:36px;display:flex;justify-content:space-around;align-items:center;padding:0 8px}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--mute);padding:8px 14px;border-radius:26px;transition:.3s}
+.nav button.on{color:var(--ink);background:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.nav button.on svg{color:var(--gold)}
+
+/* episodes sheet */
+.sheet{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;transform:translateY(100%);transition:transform .5s cubic-bezier(.2,.9,.2,1);visibility:hidden}
+.sheet.open{transform:none;visibility:visible}
+.sh-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;border-radius:0 0 26px 26px}
+.sh-top h3{font-size:19px}
+.ep{margin:16px;border-radius:26px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.ep .poster{width:100%;aspect-ratio:16/9;border-radius:0;box-shadow:none;font-size:22px}
+.ep p{color:var(--mute);font-size:14px;line-height:1.9;padding:14px 18px 6px}
+.ep .btns{display:flex;gap:10px;padding:8px 18px 18px}
+.ep .ico{width:40px;height:40px}
+.poster.real::before,.poster.real::after{display:none}.poster.real .dur{text-shadow:0 1px 6px #000}.en{position:absolute;right:14px;bottom:18px;z-index:2;font-size:20px;text-shadow:0 2px 10px #000}.ep .poster{position:relative}.hint{text-align:center;color:var(--mute);font-size:12px;padding:30px 20px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="tools">
+    <button class="ico glass" aria-label="بحث"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="sub">اشترك الآن</button>
+  </div>
+  <div class="logo">وهج<i></i></div>
+</header>
+
+<section class="hero" id="hero"></section>
+
+<div class="chips" id="chips"></div>
+<main id="rails"></main>
+<p class="hint">البيانات والصور من TMDB. هذا المنتج يستخدم واجهة TMDB لكنه غير معتمد منها.</p>
+
+<nav class="nav glass">
+  <button class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>الرئيسية</button>
+  <button><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 000 8.4M16.2 7.8a6 6 0 010 8.4M4.9 4.9a10 10 0 000 14.2M19.1 4.9a10 10 0 010 14.2"/></svg>مباشر</button>
+  <button><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M11 18h2"/></svg>مقاطع قصيرة</button>
+  <button><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>مساحتي</button>
+</nav>
+
+<section class="sheet" id="sheet">
+  <div class="sh-top glass">
+    <button class="ico glass" id="back" aria-label="رجوع"><svg viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+    <h3 id="shT"></h3>
+  </div>
+  <div id="eps"></div>
+</section>
+
+<script>
+/* ===== إعدادات TMDB ===== */
+const KEY="09ba21667e5d466902b8979f1706fe06";
+const API="https://api.themoviedb.org/3",IMG="https://image.tmdb.org/t/p/";
+const $=s=>document.querySelector(s);
+const g=async(p,q="")=>{const r=await fetch(`${API}${p}?api_key=${KEY}&language=ar${q}`);if(!r.ok)throw new Error(r.status);return r.json()};
+const chev='<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>';
+const ttl=x=>x.name||x.title||"";
+const yr=x=>((x.first_air_date||x.release_date||"")+"").slice(0,4);
+const fb=x=>{const h=(x.id*47)%360;return `linear-gradient(155deg,hsl(${h} 70% 42%),hsl(${(h+70)%360} 60% 14%))`};
+let GEN={};
+const gn=x=>(x.genre_ids||[]).map(i=>GEN[i]).filter(Boolean).slice(0,2).join(" | ");
+
+const poster=(x,extra="")=>x.poster_path
+ ?`<div class="poster real" style="background:#111 url(${IMG}w342${x.poster_path}) center/cover">${extra}</div>`
+ :`<div class="poster" style="background:${fb(x)}">${extra}<span>${ttl(x)}</span></div>`;
+const still=(x,extra="")=>{const p=x.backdrop_path||x.poster_path;return p
+ ?`<div class="poster real" style="background:#111 url(${IMG}w500${p}) center/cover">${extra}</div>`
+ :`<div class="poster" style="background:${fb(x)}">${extra}<span>${ttl(x)}</span></div>`};
+const store={get:()=>{try{return JSON.parse(localStorage.getItem("wahaj_recent")||"[]")}catch(e){return[]}},
+ add:x=>{try{const l=store.get().filter(i=>i.id!==x.id);l.unshift({id:x.id,name:ttl(x),poster_path:x.poster_path,backdrop_path:x.backdrop_path,movie:!!x.title});localStorage.setItem("wahaj_recent",JSON.stringify(l.slice(0,10)))}catch(e){}}};
+const DB={};
+
+/* ===== الهيرو ===== */
+function hero(list){
+ $("#hero").innerHTML=list.map((x,k)=>`<div class="slide${k?'':' on'}">
+  <div class="art" style="background:${x.backdrop_path?`#111 url(${IMG}w1280${x.backdrop_path}) center/cover`:fb(x)}"></div>
+  <h1>${ttl(x)}</h1>
+  <div class="rank"><em>TOP ${String(k+1).padStart(2,"0")}</em> رائج هذا الأسبوع</div>
+  <div class="meta">★ ${(x.vote_average||0).toFixed(1)} • ${yr(x)} • ${gn(x)}</div>
+  <div class="tag">${(x.overview||"").slice(0,70)}${(x.overview||"").length>70?"…":""}</div>
+  <div class="acts">
+   <button class="ico glass" style="width:56px;height:56px" aria-label="المزيد"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button>
+   <button class="play" data-open="${x.id}"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>تفاصيل وحلقات</button>
+   <button class="ico glass" style="width:56px;height:56px" aria-label="أضف للقائمة"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+  </div></div>`).join("")+`<div class="dots">${list.map((_,k)=>`<span class="${k?'':' on'}"></span>`).join("")}</div>`;
+ let cur=0;const sl=[...document.querySelectorAll(".slide")],dt=[...document.querySelectorAll(".dots span")];
+ setInterval(()=>{sl[cur].classList.remove("on");dt[cur].classList.remove("on");cur=(cur+1)%sl.length;sl[cur].classList.add("on");dt[cur].classList.add("on")},5000);
+}
+
+/* ===== الصفوف ===== */
+function rail(h,list,wide){
+ list.forEach(x=>DB[x.id]=x);
+ return `<section class="rail"><h2>${h}${chev}</h2><div class="row ${wide?'wide':''}">${list.map((x,k)=>`<div class="card" data-open="${x.id}">${wide?still(x):poster(x,wide?"":(h.includes("رواجاً")&&k<10?`<div class="topn glass">TOP<br>${String(k+1).padStart(2,"0")}</div>`:""))}<div class="cap">${wide?`<span>${ttl(x)}</span>`:(gn(x)||yr(x))}</div></div>`).join("")}</div></section>`;
+}
+function recent(){const l=store.get();if(!l.length)return"";l.forEach(x=>DB[x.id]=x.movie?{...x,title:x.name}:x);
+ return rail("استكمل المشاهدة",l,true)}
+
+/* ===== الحلقات ===== */
+const sheet=$("#sheet");
+async function openEp(id){
+ const x=DB[id];if(!x)return;store.add(x);
+ $("#shT").textContent=ttl(x);$("#eps").innerHTML='<p class="hint">جارٍ التحميل…</p>';sheet.scrollTop=0;sheet.classList.add("open");
+ try{
+  if(x.title){ // فيلم
+   $("#eps").innerHTML=`<article class="ep">${still(x)}<p>${x.overview||"لا يوجد وصف متاح."}</p></article>`;return}
+  const d=await g(`/tv/${id}`);const seasons=d.seasons.filter(s=>s.season_number>0);
+  const load=async n=>{
+   $("#eps").innerHTML=(seasons.length>1?`<div class="chips" id="ss">${seasons.map(s=>`<button class="glass${s.season_number===n?' on':''}" data-s="${s.season_number}">الموسم ${s.season_number}</button>`).join("")}</div>`:"")+'<p class="hint">جارٍ التحميل…</p>';
+   const s=await g(`/tv/${id}/season/${n}`);
+   $("#eps").innerHTML=(seasons.length>1?$("#eps").firstElementChild.outerHTML:"")+(s.episodes.length?s.episodes.map(e=>`<article class="ep">${still({id:e.id,name:e.name,backdrop_path:e.still_path,poster_path:x.poster_path},`<div class="dur">${e.runtime?e.runtime+" د":""}</div>`).replace('</div>',`</div><b class="en">الحلقة ${e.episode_number}</b>`)}<p><strong>${e.name||""}</strong><br>${e.overview||d.overview||""}</p>
+   <div class="btns"><button class="ico glass" aria-label="تنزيل"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg></button><button class="ico glass" aria-label="مشاركة"><svg viewBox="0 0 24 24"><path d="M14 4l7 6-7 6v-4c-6 0-9 2-11 6 1-6 4-10 11-10z"/></svg></button></div></article>`).join(""):'<p class="hint">لا توجد حلقات متاحة لهذا الموسم بعد.</p>');
+   const ss=$("#ss");if(ss)ss.onclick=ev=>{const b=ev.target.closest("[data-s]");if(b)load(+b.dataset.s)};
+  };
+  await load(seasons[0]?seasons[0].season_number:1);
+ }catch(e){$("#eps").innerHTML='<p class="hint">تعذر تحميل التفاصيل. تحقق من الاتصال.</p>'}
+}
+$("#back").onclick=()=>sheet.classList.remove("open");
+document.addEventListener("click",e=>{const c=e.target.closest("[data-open]");if(c)openEp(c.dataset.open)});
+
+/* ===== البداية ===== */
+$("#chips").innerHTML=["الكل","مسلسلات","أفلام","تركي","عربي"].map((c,k)=>`<button class="glass${k?'':' on'}">${c}</button>`).join("");
+$("#chips").onclick=e=>{if(e.target.tagName!=="BUTTON")return;document.querySelectorAll("#chips button").forEach(b=>b.classList.remove("on"));e.target.classList.add("on")};
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
+
+(async()=>{
+ try{
+  const [gt,tr,top,mv,tk,ar]=await Promise.all([
+   g("/genre/tv/list"),g("/trending/tv/week"),g("/tv/top_rated"),g("/movie/now_playing"),
+   g("/discover/tv","&with_origin_country=TR&sort_by=popularity.desc"),
+   g("/discover/tv","&with_origin_country=EG&sort_by=popularity.desc")]);
+  gt.genres.forEach(x=>GEN[x.id]=x.name);
+  const T=tr.results;T.forEach(x=>DB[x.id]=x);
+  hero(T.filter(x=>x.backdrop_path).slice(0,5));
+  $("#rails").innerHTML=recent()+rail("الأكثر رواجاً هذا الأسبوع",T)+rail("دراما تركية",tk.results)+rail("مسلسلات مصرية",ar.results)+rail("الأعلى تقييماً",top.results)+rail("أفلام تعرض الآن",mv.results);
+ }catch(e){
+  $("#hero").innerHTML='<div class="slide on" style="padding-bottom:140px"><h1>تعذر الاتصال</h1><div class="tag">لم نتمكن من الوصول إلى TMDB. افتح الملف من متصفح متصل بالإنترنت أو من استضافتك الخاصة، وتأكد من صحة المفتاح.</div></div>';
+ }
+})();
+</script>
+
+</body>
+</html>
